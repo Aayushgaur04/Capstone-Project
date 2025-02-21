@@ -23,9 +23,19 @@ public class GateController : MonoBehaviour
 
     void Update()
     {
-        if (!gateOpened && Vector2.Distance(transform.position, player.position) < gateOpenDistance)
+        if (player == null)
         {
-            gateAnimator.SetBool("OpenGate",true); // This triggers the animation only when player is close
+            Debug.LogError("Player reference is missing!");
+            return;
+        }
+
+        float distance = Vector2.Distance(transform.position, player.position);
+        Debug.Log("Current distance to player: " + distance);
+
+        if (!gateOpened && distance < gateOpenDistance)
+        {
+            Debug.Log("Gate opening...");
+            gateAnimator.SetBool("OpenGate", true);
             gateOpened = true;
         }
     }
@@ -50,18 +60,39 @@ public class GateController : MonoBehaviour
     IEnumerator FadeOutPlayer()
     {
         float timer = 0f;
-        Color originalColor = playerSprite.color;
+
+        // Ensure we only get sprites from the player object (excluding gate)
+        SpriteRenderer[] sprites = player.GetComponentsInChildren<SpriteRenderer>();
+        Color[] originalColors = new Color[sprites.Length];
+
+        // Store original colors
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            originalColors[i] = sprites[i].color;
+        }
 
         while (timer < fadeDuration)
         {
             float alpha = Mathf.Lerp(1f, 0f, timer / fadeDuration);
-            playerSprite.color = new Color(originalColor.r, originalColor.g, originalColor.b, alpha);
+
+            for (int i = 0; i < sprites.Length; i++)
+            {
+                sprites[i].color = new Color(originalColors[i].r, originalColors[i].g, originalColors[i].b, alpha);
+            }
+
             timer += Time.deltaTime;
             yield return null;
         }
 
-        playerSprite.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+        // Ensure full transparency
+        for (int i = 0; i < sprites.Length; i++)
+        {
+            sprites[i].color = new Color(originalColors[i].r, originalColors[i].g, originalColors[i].b, 0f);
+        }
+
         yield return new WaitForSeconds(0.5f);
         levelCompletePanel.SetActive(true);
     }
+
+
 }
