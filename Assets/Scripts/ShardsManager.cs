@@ -32,7 +32,7 @@ public class ShardsManager : MonoBehaviour
 
     void UpdateCoinCounter()
     {
-        coinCounterText.text = "Shards:" + coinCount; // Update the visible counter
+        coinCounterText.text = "" + coinCount; // Update the visible counter
     }
 
     IEnumerator GameOverWithDelay()
