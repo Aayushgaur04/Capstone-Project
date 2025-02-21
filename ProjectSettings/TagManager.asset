@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Platform
   - Shard
+  - Lava
   layers:
   - Default
   - TransparentFX

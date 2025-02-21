@@ -15,9 +15,11 @@ public class PatrolEnemy : MonoBehaviour
     [Header("Player Reference")]
     public Transform player;         // Reference to the player
 
+    [Header("Animation")]
+    public Animator animator;        // Reference to the enemy's Animator
+
     private float fireTimer = 0f;
     private bool movingToB = true;
-
     // Track the enemy's facing direction (true means facing right)
     private bool facingRight = true;
 
@@ -43,6 +45,13 @@ public class PatrolEnemy : MonoBehaviour
     /// </summary>
     private void AttackMode()
     {
+        // Set animation parameters: stop moving and start shooting.
+        if (animator != null)
+        {
+            animator.SetFloat("speed", 0f);
+            animator.SetBool("isShooting", true);
+        }
+
         // Face the player using our Flip method.
         if (player.position.x < transform.position.x && facingRight)
         {
@@ -67,6 +76,14 @@ public class PatrolEnemy : MonoBehaviour
     /// </summary>
     private void PatrolMode()
     {
+        // Set animation parameters: moving and not shooting.
+        if (animator != null)
+        {
+            animator.SetBool("isShooting", false);
+            // Here we simply set speed to 1 to indicate movement.
+            animator.SetFloat("speed", 1f);
+        }
+
         Transform targetPoint = movingToB ? pointB : pointA;
         transform.position = Vector3.MoveTowards(transform.position, targetPoint.position, patrolSpeed * Time.deltaTime);
 
@@ -109,7 +126,7 @@ public class PatrolEnemy : MonoBehaviour
 
         // Use the same method as the player's weapon script:
         // The additional rotation offset (-90°) aligns the bullet's up vector with the intended shot direction.
-        Quaternion bulletRotation = firePoint.rotation * Quaternion.Euler(0f, 0f, -90f);
+        Quaternion bulletRotation = firePoint.rotation * Quaternion.Euler(0f, 0f, 0f);
         Instantiate(bulletPrefab, firePoint.position, bulletRotation);
     }
 }
