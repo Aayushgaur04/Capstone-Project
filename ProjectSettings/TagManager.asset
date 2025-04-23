@@ -9,6 +9,12 @@ TagManager:
   - Platform
   - Shard
   - Lava
+  - Wall
+  - Bullet
+  - Enemy bullet
+  - Boss
+  - Collectible
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -19,7 +25,7 @@ TagManager:
   - Player
   - Breakable walls
   - Ground
-  - 
+  - Wall
   - 
   - 
   - 
@@ -43,6 +49,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Bakcground
+    uniqueID: 2126049697
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 1257230099
     locked: 0

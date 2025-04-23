@@ -8,28 +8,29 @@ public class Bullet : MonoBehaviour
     public int damage = 25;
     public Rigidbody2D rb;
     public GameObject explosionEffectPrefab;
+    public float lifeTime = 5f;
     // Start is called before the first frame update
     void Start()
     {
         rb.velocity = transform.right * speed;
+        Destroy(gameObject, lifeTime);
     }
 
-    private void OnTriggerEnter2D(Collider2D hitInfo)
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if(hitInfo.CompareTag("BreakWall")) {
-            Instantiate(explosionEffectPrefab, hitInfo.transform.position, Quaternion.identity); // Show explosion
-            Destroy(hitInfo.gameObject);
+        Explode();
+    }
 
-        }
-        Enemy enemy = hitInfo.GetComponent<Enemy>();
-        if (enemy != null)
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        Explode();
+    }
+
+    void Explode()
+    {
+        if (explosionEffectPrefab != null)
         {
-            enemy.TakeDamage(damage);
-        }
-        PlayerHealth playerHealth = hitInfo.GetComponent<PlayerHealth>();
-        if (playerHealth != null)
-        {
-            playerHealth.TakeDamage(damage);
+            Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
         }
         Destroy(gameObject);
     }

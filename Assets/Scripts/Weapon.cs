@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    public static bool allowInput = true;
     public Transform firePoint;
     public GameObject bulletPrefab;
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetButtonDown("Fire1"))
+        if (!allowInput) return;
+        if (Input.GetButtonDown("Fire1"))
         {
             Shoot();
         }
