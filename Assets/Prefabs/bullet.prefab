@@ -11,11 +11,11 @@ GameObject:
   - component: {fileID: 6470130891496523452}
   - component: {fileID: 8063042744064250061}
   - component: {fileID: -4568263649898881941}
-  - component: {fileID: -2810037389891709145}
   - component: {fileID: -5826417389653953452}
+  - component: {fileID: 9005268435456845616}
   m_Layer: 0
   m_Name: bullet
-  m_TagString: Untagged
+  m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,8 +75,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: c749b933be4ef02429b280ce85a8ec0e, type: 3}
+  m_SortingOrder: 11
+  m_Sprite: {fileID: 21300000, guid: 2bcd4d9be6752c54cb645d9ff56ebad4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -114,8 +114,25 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 6
---- !u!70 &-2810037389891709145
-CapsuleCollider2D:
+--- !u!114 &-5826417389653953452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8749771184770919658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d0ebd1473cdb8b4a93fa673c70ada2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 10
+  damage: 25
+  rb: {fileID: -4568263649898881941}
+  explosionEffectPrefab: {fileID: 875344135752607287, guid: 9122bc9af9aa6a54994f5b4ffff93148, type: 3}
+  lifeTime: 5
+--- !u!61 &9005268435456845616
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -147,21 +164,15 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_Size: {x: 0.09375002, y: 0.18750004}
-  m_Direction: 0
---- !u!114 &-5826417389653953452
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8749771184770919658}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d0ebd1473cdb8b4a93fa673c70ada2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 10
-  damage: 25
-  rb: {fileID: -4568263649898881941}
-  explosionEffectPrefab: {fileID: 4536115936443222770, guid: ac705310eb3feaa42939f5abea83211a, type: 3}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.125, y: 0.041666668}
+    newSize: {x: 0.09375, y: 0.1875}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.125, y: 0.041666668}
+  m_EdgeRadius: 0

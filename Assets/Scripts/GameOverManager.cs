@@ -1,35 +1,61 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using System.Collections;
 
 public class GameOverManager : MonoBehaviour
 {
-    // Reference to the Game Over panel (assign in the Inspector)
-    public GameObject gameOverPanel;
+    public static GameOverManager Instance;
 
-    private void Awake()
+    public GameObject gameOverUI; // assign the Panel
+    public float delayBeforeGameOver = 2f; // Delay in seconds
+
+    void Awake()
     {
-        // Ensure the panel is disabled at the start.
-        if (gameOverPanel != null)
+        if (Instance == null)
         {
-            gameOverPanel.SetActive(false);
+            Instance = this;
         }
         else
         {
-            Debug.LogWarning("GameOverPanel is not assigned in GameOverManager.");
+            Destroy(gameObject); // Optional: avoid duplicates
         }
     }
 
-    /// <summary>
-    /// Enables the Game Over panel.
-    /// </summary>
     public void EnableGameOverPanel()
     {
-        if (gameOverPanel != null)
+        StartCoroutine(ShowGameOverDelayed());
+    }
+
+    private IEnumerator ShowGameOverDelayed()
+    {
+        yield return new WaitForSecondsRealtime(delayBeforeGameOver); // waits even if timeScale is 0
+
+        if (gameOverUI != null)
         {
-            gameOverPanel.SetActive(true);
+            gameOverUI.SetActive(true);
         }
-        else
+
+        Time.timeScale = 0f;
+        Weapon.allowInput = false;
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1f;
+        Weapon.allowInput = true;
+
+        if (GameManager.Instance != null)
         {
-            Debug.LogWarning("GameOverPanel is not assigned in GameOverManager.");
+            GameManager.Instance.ResetGameData();
         }
+
+        SceneManager.LoadScene(2); // Hub scene
+    }
+
+    public void BackToMainMenu()
+    {
+        Time.timeScale = 1f;
+        Weapon.allowInput = true;
+        SceneManager.LoadScene(1);
     }
 }
